@@ -10,7 +10,7 @@ In a traditional proscenium theatre this is fairly easy - a space is reserved at
 
 Enter promenade, or immersive, musical theatre - where the cast and audience are often in the same space, and the audience move through a number of rooms as the cast and the action takes them.
 
-This is a very new genre of musical theatre, and hasn't really been done on a professional scale before - at least to my knowledge - and so when I was asked to do [Parade in Hemel Hempstead's Frogmore Paper Mill by Vivo D'Arte](http://www.vivodarte.co.uk/news.htm) - which required 20 radio microphones, a 7 piece orchestra, all in 5 different spaces.
+This is a very new genre of musical theatre, and hasn't really been done on a professional scale before - at least to my knowledge - and so when I was asked to do [Parade in Hemel Hempstead's Frogmore Paper Mill by Vivo D'Arte](http://www.vivodarte.co.uk/news.htm) - which required 20 radio microphones, a 7 piece orchestra, all in 5 different spaces, I apprehensively grasped at the challenge.
 
 My approach at the time was to use a [Behringer Xtouch](https://www.musictri.be/Categories/Behringer/Computer-Audio/Desktop-Controllers/X-TOUCH/p/P0B1X) control surface, with a battery power unit and WiFi access client.  The result was good<sup>[1](#myfootnote1)</sup>, but it was a challenge because I only had 8 faders to use, couldn't change the 'page' or 'scene' myself, and couldn't trigger SFX or change speaker routing; I had a very capable team working with me who could do all of the above, so I managed, but it also was a very heavy box of tricks.
 
