@@ -26,7 +26,7 @@ So, what is required is a custom-built control surface which can control a numbe
 
 Not very tidy, but hopefully this helps illustrate what's supposed to be happening.
 
-### Tech decision
+### Tech decision
 
 I went for an Arduino base for this project as I need embedded reliability and performance, without the overheads and inherent risks of using a SoC like the Raspberry Pi.  Given the complexity and number of I/O connections needed, I am basing the solution on an AT Mega 2560 - I got hold of [this dev board](http://amzn.to/2lO5UGc), but will probably design my own board from scratch for compactness
 
@@ -60,7 +60,7 @@ I decided to duplicate the work I did in another project - '[pi-showcontrol'](gi
 
 This is probably the thing I've thought the least about.  I have a very reliable, high power battery which will give me any DC voltage I like and sensibly monitor time remaining, so I may stick with that for now; so a 5.5mm/2.5mm DC power jack may be all I need - probably 12v to minimise voltage regulator heating and run the whole thing at 5v.  However, if I feel brave later on I may well implement a battery control / charge unit.
 
-### Physical manufacture
+### Physical manufacture
 
 In my mind at present, I think the best approach is going to be to create a number of different PCBs:
 
@@ -68,6 +68,10 @@ In my mind at present, I think the best approach is going to be to create a numb
 2. Master control section - the TFT (although this may just be a module bolted to the case), buttons and big 'go' buttons).
 3. Control board - the Arduino, radio chips and logic required to get the thing running.
 4. Power supply - not sure what this will entail yet - watch this space.
+
+I'd like to keep the unit as light as possible, but it will need sensible shielding (likely with pass-through capacitors for the 433 MHz antennae) - so I will be building the case out of sheet aluminium, probably cut using a CNC mill, or laser cut by a third party fabrication shop.  All of the controls will be mounted on the top panel, the control / power boards likely on the bottom panel, and the rear will be used for wired connections for charging, firmware upgrades and diagnostics.
+
+On the sides of the box (which will likely need to be thicker / better reinforced) I will have holes for the straps which I will wear to use the unit whilst walking around (in [ice cream tray style](http://www.promotional-images.co.uk/ProdImages/2f9f440d-2c25-4093-97b0-d831b5edaa2b/classic2-lg.jpg) without the ice creams)
 
 ### The other end
 
