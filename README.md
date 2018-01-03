@@ -30,7 +30,7 @@ Not very tidy, but hopefully this helps illustrate what's supposed to be happeni
 
 I went for an Arduino base for this project as I need embedded reliability and performance, without the overheads and inherent risks of using a SoC like the Raspberry Pi.  Given the complexity and number of I/O connections needed, I am basing the solution on an AT Mega 2560 - I got hold of [this dev board](http://amzn.to/2lO5UGc), but will probably design my own board from scratch for compactness
 
-### Wireless comms
+### Wireless comms
 
 I need a long-range, full duplex transmit/receive solution for reasonably small payloads with a limited amount of overhead / latency.  I came across [LoRa](https://www.lora-alliance.org/) which seems to fit the bill, and I bought a couple of [dev boards for the RA-02 chip](http://amzn.to/2ELpx9M) which uses 433 MHz (or a couple of other free to use frequenceis).  I haven't completed testing yet but it seems to work well for my purposes.  What's more as it's designed for IoT, multiple receivers can be used to widen the transmit range if needed.
 
