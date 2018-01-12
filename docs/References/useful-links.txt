@@ -1,0 +1,9 @@
+Multiplexing SPI lines:
+
+https://forum.arduino.cc/index.php?topic=461410.0
+
+Arduino/LoRA:
+
+https://github.com/sandeepmistry/arduino-LoRa#semtech-sx1276777879-wiring
+
+
