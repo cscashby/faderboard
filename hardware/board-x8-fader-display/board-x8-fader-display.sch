@@ -31,6 +31,7 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
+LIBS:board-x8-fader-display-cache
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
@@ -153,6 +154,17 @@ F 1 "4051" H 3650 1400 50  0000 C CNN
 F 2 "" H 3550 1600 60  0001 C CNN
 F 3 "" H 3550 1600 60  0001 C CNN
 	1    3550 1600
+	1    0    0    -1  
+$EndComp
+$Comp
+L L293 U?
+U 1 1 5A6CD376
+P 3450 4950
+F 0 "U?" H 3450 5400 60  0000 C CNN
+F 1 "L293" H 3450 4550 60  0000 C CNN
+F 2 "" H 3400 4650 60  0001 C CNN
+F 3 "" H 3400 4650 60  0001 C CNN
+	1    3450 4950
 	1    0    0    -1  
 $EndComp
 $EndSCHEMATC
