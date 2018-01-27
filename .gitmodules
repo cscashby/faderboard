@@ -1,0 +1,3 @@
+[submodule "arduino/lib/SSD_13XX"]
+	path = arduino/lib/SSD_13XX
+	url = git@github.com:cscashby/SSD_13XX.git
