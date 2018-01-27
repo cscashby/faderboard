@@ -1,8 +1,0 @@
-EESchema-DOCLIB  Version 2.0
-#
-$CMP 4051
-D Analog Multiplexer 8 to 1 lins
-K CMOS MUX MUX8
-$ENDCMP
-#
-#End Doc Library
