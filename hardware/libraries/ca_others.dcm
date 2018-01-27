@@ -5,4 +5,9 @@ D Analog Multiplexer 8 to 1 lins
 K CMOS MUX MUX8
 $ENDCMP
 #
+$CMP 74xx238
+D 3-to-8 line decoder/demultiplexer
+K CMOS DEMUX DEMUX8
+$ENDCMP
+#
 #End Doc Library
