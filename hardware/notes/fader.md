@@ -8,6 +8,7 @@ Fader appears to be an Alps RSA0N11M9A0J.
 
 Specs:
 
+--- | --- | ---
 Number of resistor elements | Single-unit
 Direction of lever | Vertical
 Travel | 100mm
