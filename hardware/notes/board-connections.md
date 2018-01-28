@@ -12,15 +12,15 @@
 |  FD-J1 | 4 | GND |  |
 |  FD-J1 | 5 | GND |  |
 |  FD-J1 | 6 | VMOTOR | +12v TBC |
-|  FD-J1 | 7 | GND |  |
+|  FD-J1 | 7 | FSDAa | I2C for first CAP1296 |
 |  FD-J1 | 8 | MCTLA | Motor Control |
-|  FD-J1 | 9 | MCTLB | Motor Control |
-|  FD-J1 | 10 | SDA | I2C |
-|  FD-J1 | 11 | SCL | I2C |
+|  FD-J1 | 9 | FSCLa | I2C for first CAP1296 |
+|  FD-J1 | 10 | MCTLB | Motor Control |
+|  FD-J1 | 11 | GND |  |
 |  FD-J1 | 12 | FIRQ | For touch (active Low) |
-|  FD-J1 | 13 | GND |  |
+|  FD-J1 | 13 | FSDAb | I2C for first CAP1296 |
 |  FD-J1 | 14 | FADER | Fader GND->Vref |
-|  FD-J1 | 15 | GND |  |
+|  FD-J1 | 15 | FSCLb | I2C for first CAP1296 |
 |  FD-J1 | 16 | MA0 | Motor address LSB |
 |  FD-J1 | 17 | MA1 | Motor address |
 |  FD-J1 | 18 | MA2 | Motor address MSB |
@@ -46,11 +46,11 @@
 |  GND | 1 | 2 | VCC / VDD |
 |  VREF | 3 | 4 | GND |
 |  GND | 5 | 6 | VMOTOR |
-|  GND | 7 | 8 | MCTLA |
-|  MCTLB | 9 | 10 | SDA |
-|  SCL | 11 | 12 | FIRQ |
-|  GND | 13 | 14 | FADER |
-|  GND | 15 | 16 | MA0 |
+|  FSDAa | 7 | 8 | MCTLA |
+|  FSCLa | 9 | 10 | MCTLB |
+|  GND | 11 | 12 | FIRQ |
+|  FSDAb | 13 | 14 | FADER |
+|  FSCLb | 15 | 16 | MA0 |
 |  MA1 | 17 | 18 | MA2 |
 |  MA3 | 19 | 20 | FA0 |
 |  FA1 | 21 | 22 | FA2 |
