@@ -4,3 +4,6 @@
 [submodule "arduino/lib/CAP1296"]
 	path = arduino/lib/CAP1296
 	url = git@github.com:cscashby/CAP1296.git
+[submodule "hardware/notes/logic-levels/4-Channel-Level-Shifter-PCB"]
+	path = hardware/notes/logic-levels/4-Channel-Level-Shifter-PCB
+	url = git@github.com:adafruit/4-Channel-Level-Shifter-PCB.git
