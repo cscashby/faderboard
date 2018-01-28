@@ -42,9 +42,9 @@ Date "28/14/2018"
 Rev "0.1"
 Comp ""
 Comment1 "Prefixes - M = motor, F = fader, D = display"
-Comment2 "NOTE: Configured for all 5v Logic"
-Comment3 ""
-Comment4 ""
+Comment2 ""
+Comment3 "NOTE: Configured for all 5v Logic"
+Comment4 "TODO: Check I2C pullup requirement (on what board?)"
 $EndDescr
 $Comp
 L RSA0N11M9A0J RV1
