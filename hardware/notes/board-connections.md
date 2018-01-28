@@ -2,6 +2,8 @@
 
 ## 8-fader, NO OLEDS yet
 
+### By pin
+
 |  **Connector** | **Pin** | **Signal Name** | **Notes** |
 |  ------: | :------: | :------: | ------ |
 |  FD-J1 | 1 | GND |  |
@@ -28,3 +30,20 @@
 |  FD-J1 | 22 | FA2 | Fader address MSB |
 |  FD-J1 | 23 | FA3 | Fader enable for board (active High) |
 |  FD-J1 | 24 | BSEL | Board select (MPR121 I2C addr GND = 0x5a, VCC = 0x5b) |
+
+### Connector layout
+
+|  **Name** | **Pin** | **Pin** | **Name** |
+|  ------: | :------: | :------: | ------ |
+|  GND | 1 | 2 | VCC / VDD |
+|  VREF | 3 | 4 | GND |
+|  GND | 5 | 6 | VMOTOR |
+|  GND | 7 | 8 | MCTLA |
+|  MCTLB | 9 | 10 | SDA |
+|  SCL | 11 | 12 | 'IRQ |
+|  GND | 13 | 14 | FADER |
+|  GND | 15 | 16 | MA0 |
+|  MA1 | 17 | 18 | MA2 |
+|  MA3 | 19 | 20 | FA0 |
+|  FA1 | 21 | 22 | FA2 |
+|  FA3 | 23 | 24 | BSEL |
