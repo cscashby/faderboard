@@ -1,6 +1,6 @@
-# Faderbaard connector layout
+# Faderboard connector layout
 
-## 8-fader, OLED board
+## 8-fader, OLED board
 
 |  **Connector** | **Pin** | **Signal Name** | **Notes** |
 |  ------: | :------: | :------: | ------ |
