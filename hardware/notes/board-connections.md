@@ -1,6 +1,6 @@
 # Faderboard connector layout
 
-## 8-fader, NO OLEDS yet
+## 8-fader and OLED control
 
 ### By pin
 
@@ -17,7 +17,7 @@
 |  FD-J1 | 9 | MCTLB | Motor Control |
 |  FD-J1 | 10 | SDA | I2C |
 |  FD-J1 | 11 | SCL | I2C |
-|  FD-J1 | 12 | 'IRQ | For touch (active Low) |
+|  FD-J1 | 12 | FIRQ | For touch (active Low) |
 |  FD-J1 | 13 | GND |  |
 |  FD-J1 | 14 | FADER | Fader GND->Vref |
 |  FD-J1 | 15 | GND |  |
@@ -29,7 +29,15 @@
 |  FD-J1 | 21 | FA1 | Fader address |
 |  FD-J1 | 22 | FA2 | Fader address MSB |
 |  FD-J1 | 23 | FA3 | Fader enable for board (active High) |
-|  FD-J1 | 24 | BSEL | Board select (MPR121 I2C addr GND = 0x5a, VCC = 0x5b) |
+|  FD-J1 | 24 | DA0 | Display address LSB |
+|  FD-J1 | 25 | DA1 | Display address |
+|  FD-J1 | 26 | DA2 | Display address MSB |
+|  FD-J1 | 27 | DA3 | Display enable for board (active High) |
+|  FD-J1 | 28 | DRST | Display Reset |
+|  FD-J1 | 29 | DDC | Display D/C |
+|  FD-J1 | 30 | BSEL | Board select (MPR121 I2C addr GND = 0x5a, VCC = 0x5b) |
+|  FD-J1 | 31 | GND |  |
+|  FD-J1 | 32 | GND |  |
 
 ### Connector layout
 
@@ -40,10 +48,14 @@
 |  GND | 5 | 6 | VMOTOR |
 |  GND | 7 | 8 | MCTLA |
 |  MCTLB | 9 | 10 | SDA |
-|  SCL | 11 | 12 | 'IRQ |
+|  SCL | 11 | 12 | FIRQ |
 |  GND | 13 | 14 | FADER |
 |  GND | 15 | 16 | MA0 |
 |  MA1 | 17 | 18 | MA2 |
 |  MA3 | 19 | 20 | FA0 |
 |  FA1 | 21 | 22 | FA2 |
-|  FA3 | 23 | 24 | BSEL |
+|  FA3 | 23 | 24 | DA0 |
+|  DA1 | 25 | 26 | DA2 |
+|  DA3 | 27 | 28 | DRST |
+|  DDC | 29 | 30 | BSEL |
+|  GND | 31 | 32 | GND |
