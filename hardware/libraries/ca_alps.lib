@@ -9,7 +9,7 @@ F1 "RSA0N11M9A0J" -100 0 50 V I C CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 $FPLIST
- Potentiometer*
+ AlpsFader*
 $ENDFPLIST
 DRAW
 C -300 0 71 0 0 0 N
