@@ -1,0 +1,120 @@
+
+(rules PCB board-x8-fader-display
+  (snap_angle 
+    fortyfive_degree
+  )
+  (autoroute_settings
+    (fanout off)
+    (autoroute on)
+    (postroute on)
+    (vias on)
+    (via_costs 50)
+    (plane_via_costs 5)
+    (start_ripup_costs 100)
+    (start_pass_no 3862)
+    (layer_rule F.Cu
+      (active on)
+      (preferred_direction horizontal)
+      (preferred_direction_trace_costs 1.0)
+      (against_preferred_direction_trace_costs 2.2)
+    )
+    (layer_rule B.Cu
+      (active on)
+      (preferred_direction vertical)
+      (preferred_direction_trace_costs 1.0)
+      (against_preferred_direction_trace_costs 1.8)
+    )
+  )
+  (rule
+    (width 600.0)
+    (clear 500.2)
+    (clear 300.0 (type smd_to_turn_gap))
+    (clear 125.0 (type smd_smd))
+  )
+  (padstack "Via[0-1]_800:600_um"
+    (shape
+      (circle F.Cu 800.0 0.0 0.0)
+    )
+    (shape
+      (circle B.Cu 800.0 0.0 0.0)
+    )
+    (attach off)
+  )
+  (padstack "Via[0-1]_1200:1000_um"
+    (shape
+      (circle F.Cu 1200.0 0.0 0.0)
+    )
+    (shape
+      (circle B.Cu 1200.0 0.0 0.0)
+    )
+    (attach off)
+  )
+  (via 
+    "Via[0-1]_800:600_um" "Via[0-1]_800:600_um" default
+  )
+  (via 
+    "Via[0-1]_1200:1000_um" "Via[0-1]_1200:1000_um" default
+  )
+  (via 
+    "Via[0-1]_800:600_um-kicad_default" "Via[0-1]_800:600_um" "kicad_default"
+  )
+  (via 
+    "Via[0-1]_1200:1000_um-kicad_default" "Via[0-1]_1200:1000_um" "kicad_default"
+  )
+  (via 
+    "Via[0-1]_800:600_um-Power" "Via[0-1]_800:600_um" Power
+  )
+  (via 
+    "Via[0-1]_1200:1000_um-Power" "Via[0-1]_1200:1000_um" Power
+  )
+  (via_rule
+    default "Via[0-1]_800:600_um"
+  )
+  (via_rule
+    "kicad_default" "Via[0-1]_800:600_um-kicad_default"
+  )
+  (via_rule
+    Power "Via[0-1]_1200:1000_um-Power"
+  )
+  (class default
+    (clearance_class default)
+    (via_rule default)
+    (rule
+      (width 600.0)
+    )
+    (circuit 
+      (use_layer F.Cu B.Cu)
+    )
+  )
+  (class "kicad_default"
+    /FSCL /FSDA /D~RST~ /DDC /DCS0 /DCS1 /DCS2 /DCS3
+    /DCS4 /DCS5 /DCS6 /DCS7 /FSDAa /MCTLA /FSCLa /MCTLB
+    /F~IRQ~ /FSDAb /FADER /FSCLb /MA0 /MA1 /MA2 /MA3
+    /FA0 /FA1 /FA2 /FA3 /DA0 /DA1 /DA2 /DA3
+    /BSEL "Net-(R1-Pad1)" "Net-(R2-Pad1)" /FCAP0 /FAD0 "Net-(RV1-PadA)" "Net-(RV1-PadB)" /FCAP1
+    /FAD1 "Net-(RV2-PadA)" "Net-(RV2-PadB)" /FCAP2 /FAD2 "Net-(RV3-PadA)" "Net-(RV3-PadB)" /FCAP3
+    /FAD3 "Net-(RV4-PadA)" "Net-(RV4-PadB)" /FCAP4 /FAD4 "Net-(RV5-PadA)" "Net-(RV5-PadB)" /FCAP5
+    /FAD5 "Net-(RV6-PadA)" "Net-(RV6-PadB)" /FCAP6 /FAD6 "Net-(RV7-PadA)" "Net-(RV7-PadB)" /FCAP7
+    /FAD7 "Net-(RV8-PadA)" "Net-(RV8-PadB)" /MEN0 /MEN1 /MEN2 /MEN3 /MEN4
+    /MEN5 /MEN6 /MEN7
+    (clearance_class "kicad_default")
+    (via_rule kicad_default)
+    (rule
+      (width 600.0)
+    )
+    (circuit 
+      (use_layer F.Cu B.Cu)
+    )
+  )
+  (class Power
+    VCC GND VREF +12V
+    (clearance_class Power)
+    (via_rule Power)
+    (rule
+      (width 1000.0)
+    )
+    (circuit 
+      (use_layer F.Cu B.Cu)
+    )
+  )
+)
