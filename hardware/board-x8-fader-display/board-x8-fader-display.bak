@@ -635,7 +635,7 @@ U 1 1 5A6DD9FD
 P 650 1000
 F 0 "J1" H 650 1400 50  0000 C CNN
 F 1 "OLED0" H 650 600 50  0000 C CNN
-F 2 "Socket_Strips:Socket_Strip_Straight_1x07" H 650 1000 50  0001 C CNN
+F 2 "ca_displays:0.95_SPI_SSD1306_Display" H 650 1000 50  0001 C CNN
 F 3 "" H 650 1000 50  0001 C CNN
 	1    650  1000
 	-1   0    0    -1  
@@ -646,7 +646,7 @@ U 1 1 5A6DDB31
 P 650 1900
 F 0 "J2" H 650 2300 50  0000 C CNN
 F 1 "OLED1" H 650 1500 50  0000 C CNN
-F 2 "Socket_Strips:Socket_Strip_Straight_1x07" H 650 1900 50  0001 C CNN
+F 2 "ca_displays:0.95_SPI_SSD1306_Display" H 650 1900 50  0001 C CNN
 F 3 "" H 650 1900 50  0001 C CNN
 	1    650  1900
 	-1   0    0    -1  
@@ -657,7 +657,7 @@ U 1 1 5A6DDBA3
 P 650 2800
 F 0 "J3" H 650 3200 50  0000 C CNN
 F 1 "OLED2" H 650 2400 50  0000 C CNN
-F 2 "Socket_Strips:Socket_Strip_Straight_1x07" H 650 2800 50  0001 C CNN
+F 2 "ca_displays:0.95_SPI_SSD1306_Display" H 650 2800 50  0001 C CNN
 F 3 "" H 650 2800 50  0001 C CNN
 	1    650  2800
 	-1   0    0    -1  
@@ -668,7 +668,7 @@ U 1 1 5A6DDC50
 P 650 3700
 F 0 "J4" H 650 4100 50  0000 C CNN
 F 1 "OLED3" H 650 3300 50  0000 C CNN
-F 2 "Socket_Strips:Socket_Strip_Straight_1x07" H 650 3700 50  0001 C CNN
+F 2 "ca_displays:0.95_SPI_SSD1306_Display" H 650 3700 50  0001 C CNN
 F 3 "" H 650 3700 50  0001 C CNN
 	1    650  3700
 	-1   0    0    -1  
@@ -679,7 +679,7 @@ U 1 1 5A6DDCC2
 P 650 4600
 F 0 "J5" H 650 5000 50  0000 C CNN
 F 1 "OLED4" H 650 4200 50  0000 C CNN
-F 2 "Socket_Strips:Socket_Strip_Straight_1x07" H 650 4600 50  0001 C CNN
+F 2 "ca_displays:0.95_SPI_SSD1306_Display" H 650 4600 50  0001 C CNN
 F 3 "" H 650 4600 50  0001 C CNN
 	1    650  4600
 	-1   0    0    -1  
@@ -690,7 +690,7 @@ U 1 1 5A6DE35D
 P 650 5500
 F 0 "J6" H 650 5900 50  0000 C CNN
 F 1 "OLED5" H 650 5100 50  0000 C CNN
-F 2 "Socket_Strips:Socket_Strip_Straight_1x07" H 650 5500 50  0001 C CNN
+F 2 "ca_displays:0.95_SPI_SSD1306_Display" H 650 5500 50  0001 C CNN
 F 3 "" H 650 5500 50  0001 C CNN
 	1    650  5500
 	-1   0    0    -1  
@@ -701,7 +701,7 @@ U 1 1 5A6DE3D4
 P 650 6400
 F 0 "J7" H 650 6800 50  0000 C CNN
 F 1 "OLED6" H 650 6000 50  0000 C CNN
-F 2 "Socket_Strips:Socket_Strip_Straight_1x07" H 650 6400 50  0001 C CNN
+F 2 "ca_displays:0.95_SPI_SSD1306_Display" H 650 6400 50  0001 C CNN
 F 3 "" H 650 6400 50  0001 C CNN
 	1    650  6400
 	-1   0    0    -1  
@@ -712,7 +712,7 @@ U 1 1 5A6DE44F
 P 650 7300
 F 0 "J8" H 650 7700 50  0000 C CNN
 F 1 "OLED7" H 650 6900 50  0000 C CNN
-F 2 "Socket_Strips:Socket_Strip_Straight_1x07" H 650 7300 50  0001 C CNN
+F 2 "ca_displays:0.95_SPI_SSD1306_Display" H 650 7300 50  0001 C CNN
 F 3 "" H 650 7300 50  0001 C CNN
 	1    650  7300
 	-1   0    0    -1  
@@ -1517,7 +1517,7 @@ U 1 1 5A6E8B77
 P 9800 2000
 F 0 "J9" H 9850 2800 50  0000 C CNN
 F 1 "Conn_02x16_Odd_Even" H 9850 1100 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_2x16" H 9800 2000 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Angled_2x16_Pitch2.54mm" H 9800 2000 50  0001 C CNN
 F 3 "" H 9800 2000 50  0001 C CNN
 	1    9800 2000
 	1    0    0    -1  

@@ -1517,7 +1517,7 @@ U 1 1 5A6E8B77
 P 9800 2000
 F 0 "J9" H 9850 2800 50  0000 C CNN
 F 1 "Conn_02x16_Odd_Even" H 9850 1100 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Angled_2x16_Pitch2.54mm" H 9800 2000 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x16_Pitch2.54mm" H 9800 2000 50  0001 C CNN
 F 3 "" H 9800 2000 50  0001 C CNN
 	1    9800 2000
 	1    0    0    -1  
