@@ -1,4 +1,5 @@
 (fp_lib_table
   (lib (name ca_alps)(type KiCad)(uri /Users/cashby/dev/electronics/Faderboard/hardware/libraries/ca_alps.pretty)(options "")(descr ""))
   (lib (name ca_displays)(type KiCad)(uri /Users/cashby/dev/electronics/Faderboard/hardware/libraries/ca_displays.pretty)(options "")(descr ""))
+  (lib (name ca_dip)(type KiCad)(uri /Users/cashby/dev/electronics/Faderboard/hardware/libraries/ca_dip.pretty)(options "")(descr ""))
 )
