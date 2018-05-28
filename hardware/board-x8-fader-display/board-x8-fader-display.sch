@@ -2068,4 +2068,6 @@ Wire Wire Line
 Connection ~ 950  6900
 Wire Wire Line
 	10100 1800 10400 1800
+Text Notes 5100 950  0    60   ~ 0
+PROTOTYPE BOARD (NO LONGER CURRENT)
 $EndSCHEMATC
