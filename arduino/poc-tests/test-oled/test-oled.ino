@@ -16,14 +16,16 @@
   BSD license, all text above must be included in any redistribution
  ****************************************************/
 
+const int FADERS = 2;
+const byte DApins[] = {26,27,28};
+// CS = DA3 = pin 48 (TODO check)
 
 // You can use any (4 or) 5 pins 
 //#define sclk 13
 //#define mosi 11
 #define cs   53
-#define rst  3
-#define dc   11
-
+#define rst  48
+#define dc   49
 
 // Color definitions
 #define	BLACK           0x0000
@@ -52,60 +54,78 @@ float p = 3.1415926;
 
 void setup(void) {
   Serial.begin(9600);
-  Serial.print("hello!");
-  display.begin();
-
-  Serial.println("init");
-  uint16_t time = millis();
-  display.fillScreen(BLACK);
-  time = millis() - time;
+  Serial.println("START");
   
-  Serial.println(time, DEC);
-  delay(500);
+  for( int bt=0; bt<sizeof(DApins); bt++ ) {
+    pinMode(DApins[bt], OUTPUT);
+    Serial.print("pin ");
+    Serial.print(DApins[bt]);
+    Serial.print("=OUTPUT,");
+  }
+
+  Serial.println();
+
+  for( int fader=0; fader<FADERS; fader++ ) { 
+    for( int bt=0; bt<sizeof(DApins); bt++ ) {
+      byte state = bitRead(fader, bt);
+      digitalWrite(DApins[bt], state);
+    }
+    Serial.println(fader);
+    
+    display.begin();
+  
+    Serial.println("init");
+    uint16_t time = millis();
+    display.fillScreen(BLACK);
+    time = millis() - time;
+    
+    Serial.println(time, DEC);
+    delay(500);
+     
+    lcdTestPattern();
+    delay(1000);
+    
+    display.fillScreen(BLACK);
+    display.setCursor(0,0);
+    display.print("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur adipiscing ante sed nibh tincidunt feugiat. Maecenas enim massa");
+    delay(1000);
+  
+    // tft print function!
+    tftPrintTest();
+    delay(2000);
+    
+    //a single pixel
+    display.drawPixel(display.width()/2, display.height()/2, GREEN);
+    delay(500);
+    
+    // line draw test
+    testlines(YELLOW);
+    delay(500);    
+    
+    // optimized lines
+    testfastlines(RED, BLUE);
+    delay(500);    
    
-  lcdTestPattern();
-  delay(1000);
+    testdrawrects(GREEN);
+    delay(1000);
   
-  display.fillScreen(BLACK);
-  display.setCursor(0,0);
-  display.print("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur adipiscing ante sed nibh tincidunt feugiat. Maecenas enim massa");
-  delay(1000);
-
-  // tft print function!
-  tftPrintTest();
-  delay(2000);
+    testfillrects(YELLOW, MAGENTA);
+    delay(1000);
   
-  //a single pixel
-  display.drawPixel(display.width()/2, display.height()/2, GREEN);
-  delay(500);
+    display.fillScreen(BLACK);
+    testfillcircles(10, BLUE);
+    testdrawcircles(10, WHITE);
+    delay(1000);
   
-  // line draw test
-  testlines(YELLOW);
-  delay(500);    
-  
-  // optimized lines
-  testfastlines(RED, BLUE);
-  delay(500);    
- 
-  testdrawrects(GREEN);
-  delay(1000);
-
-  testfillrects(YELLOW, MAGENTA);
-  delay(1000);
-
-  display.fillScreen(BLACK);
-  testfillcircles(10, BLUE);
-  testdrawcircles(10, WHITE);
-  delay(1000);
-
-  testroundrects();
-  delay(500);
-  
-  testtriangles();
-  delay(500);
-  
-  Serial.println("done");
-  delay(1000);
+    testroundrects();
+    delay(500);
+    
+    testtriangles();
+    delay(500);
+    
+    Serial.println("done");
+    delay(1000);
+  }
 }
 
 void loop() {
