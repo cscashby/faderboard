@@ -1,0 +1,18 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    </head>
+    <body>
+    <h1>/Users/cashby/dev/electronics/Faderboard/hardware/board-x8-fader-display/board-x8-fader-display.sch</h1>
+    <p>Thursday, 24 May 2018 'pmt' 21:23:35</p>
+    <p>Eeschema 4.0.7</p>
+    <p><b>Component Count:</b>41</p>
+    <table>
+    <tr><th style='width:640px'>Ref</th><th>Qnty</th><th>Value</th><th>Part</th><th>Datasheet</th><th>Description</th><th>Vendor</th></tr><tr><td>C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13</td><td>13</td><td>10nF</td><td>device:C_Small</td><td></td><td>Unpolarized capacitor</td><td></td></tr><tr><td>J1</td><td>1</td><td>OLED0</td><td>conn:Conn_01x07_Female</td><td></td><td>Generic connector, single row, 01x07</td><td></td></tr><tr><td>J2</td><td>1</td><td>OLED1</td><td>conn:Conn_01x07_Female</td><td></td><td>Generic connector, single row, 01x07</td><td></td></tr><tr><td>J3</td><td>1</td><td>OLED2</td><td>conn:Conn_01x07_Female</td><td></td><td>Generic connector, single row, 01x07</td><td></td></tr><tr><td>J4</td><td>1</td><td>OLED3</td><td>conn:Conn_01x07_Female</td><td></td><td>Generic connector, single row, 01x07</td><td></td></tr><tr><td>J5</td><td>1</td><td>OLED4</td><td>conn:Conn_01x07_Female</td><td></td><td>Generic connector, single row, 01x07</td><td></td></tr><tr><td>J6</td><td>1</td><td>OLED5</td><td>conn:Conn_01x07_Female</td><td></td><td>Generic connector, single row, 01x07</td><td></td></tr><tr><td>J7</td><td>1</td><td>OLED6</td><td>conn:Conn_01x07_Female</td><td></td><td>Generic connector, single row, 01x07</td><td></td></tr><tr><td>J8</td><td>1</td><td>OLED7</td><td>conn:Conn_01x07_Female</td><td></td><td>Generic connector, single row, 01x07</td><td></td></tr><tr><td>J9</td><td>1</td><td>Conn_02x16_Odd_Even</td><td>conn:Conn_02x16_Odd_Even</td><td></td><td>Generic connector, double row, 02x16, odd/even pin numbering scheme (row 1 odd numbers, row 2 even numbers)</td><td></td></tr><tr><td>R1, R2</td><td>2</td><td>2k2</td><td>device:R_Small</td><td></td><td>Resistor, small symbol</td><td></td></tr><tr><td>RV1, RV2, RV3, RV4, RV5, RV6, RV7, RV8</td><td>8</td><td>RSA0N11M9A0J</td><td>ca_alps:RSA0N11M9A0J</td><td></td><td>Alps motorised fader RSA0N11M9A0J</td><td></td></tr><tr><td>U1, U9</td><td>2</td><td>74xx238</td><td>ca_others:74xx238</td><td></td><td>3-to-8 line decoder/demultiplexer</td><td></td></tr><tr><td>U2, U3, U4, U5</td><td>4</td><td>L293</td><td>ca_others:L293</td><td></td><td></td><td></td></tr><tr><td>U6, U7</td><td>2</td><td>CAP1296</td><td>ca_microchip:CAP1296_DFN</td><td></td><td></td><td></td></tr><tr><td>U8</td><td>1</td><td>4051</td><td>ca_others:4051</td><td></td><td>Analog Multiplexer 8 to 1 lins</td><td></td></tr><!--TABLEROW-->
+    </table>
+    </body>
+</html>
+    
