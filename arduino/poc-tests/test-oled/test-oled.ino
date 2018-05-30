@@ -16,9 +16,8 @@
   BSD license, all text above must be included in any redistribution
  ****************************************************/
 
-const int FADERS = 2;
+const int FADERS = 4;
 const byte DApins[] = {26,27,28};
-// CS = DA3 = pin 48 (TODO check)
 
 // You can use any (4 or) 5 pins 
 //#define sclk 13
