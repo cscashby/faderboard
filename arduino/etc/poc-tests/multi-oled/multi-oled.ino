@@ -37,7 +37,7 @@ const byte DApins[] = {26,27,28};
 #define WHITE           0xFFFF
 
 #include <Adafruit_GFX.h>
-#include "cscashby_SSD1331.h"
+#include <Adafruit_SSD1331.h>
 #include <SPI.h>
 
 // Option 1: use any pins but a little slower
@@ -47,78 +47,88 @@ const byte DApins[] = {26,27,28};
 // (for UNO thats sclk = 13 and sid = 11) and pin 10 must be 
 // an output. This is much faster - also required if you want
 // to use the microSD card (see the image drawing example)
-cscashby_SSD1331 d = cscashby_SSD1331(cs, dc, rst);
+Adafruit_SSD1331 d = Adafruit_SSD1331(cs, dc, rst);
 
 float p = 3.1415926;
 
 void setup(void) {
   Serial.begin(9600);
   Serial.println("START");
-  
+
+  // Set DA pins as output
   for( int bt=0; bt<sizeof(DApins); bt++ ) {
     pinMode(DApins[bt], OUTPUT);
-    Serial.print("pin ");
-    Serial.print(DApins[bt]);
-    Serial.print("=OUTPUT,");
-    digitalWrite(DApins[bt], LOW);
   }
 
-  Serial.println();
+  for( byte fader = 0; fader < FADERS; fader++ ) {
+    for( int bt=0; bt<sizeof(DApins); bt++ ) {
+      byte state = bitRead(fader, bt);
+      digitalWrite(DApins[bt], state);
+    }
 
-  d.init();
-  d.begin();
+    d.begin();
 
-  Serial.println("init");
-  uint16_t time = millis();
-  d.fillScreen(BLACK);
-  time = millis() - time;
+    d.fillScreen(BLACK);
+  }
   
-  Serial.println(time, DEC);
-  delay(500);
+  for( byte fader = 0; fader < FADERS; fader++ ) {
+    for( byte bt=0; bt<sizeof(DApins); bt++ ) {
+      byte state = bitRead(fader, bt);
+      digitalWrite(DApins[bt], state);
+    }
+
+    Serial.println("init");
+    uint16_t time = millis();
+    d.fillScreen(BLACK);
+    time = millis() - time;
+    
+    Serial.println(time, DEC);
+    delay(500);
+     
+    lcdTestPattern();
+    delay(1000);
+    
+    d.fillScreen(BLACK);
+    d.setCursor(0,0);
+    d.print("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur adipiscing ante sed nibh tincidunt feugiat. Maecenas enim massa");
+    delay(1000);
+  
+    // tft print function!
+    tftPrintTest();
+    delay(2000);
+    
+    //a single pixel
+    d.drawPixel(d.width()/2, d.height()/2, GREEN);
+    delay(500);
+    
+    // line draw test
+    testlines(YELLOW);
+    delay(500);    
+    
+    // optimized lines
+    testfastlines(RED, BLUE);
+    delay(500);    
    
-  lcdTestPattern();
-  delay(1000);
+    testdrawrects(GREEN);
+    delay(1000);
   
-  d.fillScreen(BLACK);
-  d.setCursor(0,0);
-  d.print("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur adipiscing ante sed nibh tincidunt feugiat. Maecenas enim massa");
-  delay(1000);
-
-  // tft print function!
-  tftPrintTest();
-  delay(2000);
+    testfillrects(YELLOW, MAGENTA);
+    delay(1000);
   
-  //a single pixel
-  d.drawPixel(d.width()/2, d.height()/2, GREEN);
-  delay(500);
+    d.fillScreen(BLACK);
+    testfillcircles(10, BLUE);
+    testdrawcircles(10, WHITE);
+    delay(1000);
   
-  // line draw test
-  testlines(YELLOW);
-  delay(500);    
-  
-  // optimized lines
-  testfastlines(RED, BLUE);
-  delay(500);    
- 
-  testdrawrects(GREEN);
-  delay(1000);
-
-  testfillrects(YELLOW, MAGENTA);
-  delay(1000);
-
-  d.fillScreen(BLACK);
-  testfillcircles(10, BLUE);
-  testdrawcircles(10, WHITE);
-  delay(1000);
-
-  testroundrects();
-  delay(500);
-  
-  testtriangles();
-  delay(500);
-  
-  Serial.println("done");
-  delay(1000);
+    testroundrects();
+    delay(500);
+    
+    testtriangles();
+    delay(500);
+    
+    Serial.println("done");
+    delay(1000);
+  }
 }
 
 void loop() {
