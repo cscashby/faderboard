@@ -6,7 +6,7 @@
 #define RST     4
 #define DI0     7
 #define BAND    433E6 
-#define SPIFREQ 8E6
+#define SPIFREQ 4E6
 
 void setup() {
   Serial.begin(9600);
@@ -16,7 +16,7 @@ void setup() {
   LoRa.setPins(SS,RST,DI0);
   
   Serial.print("LoRa Receiver ");
-  Serial.println(LoRa.random());
+  //Serial.println(LoRa.random());
 
   if (!LoRa.begin(BAND)) {
     Serial.println("Starting LoRa failed!");
