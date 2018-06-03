@@ -4,6 +4,3 @@
 [submodule "hardware/notes/logic-levels/4-Channel-Level-Shifter-PCB"]
 	path = hardware/notes/logic-levels/4-Channel-Level-Shifter-PCB
 	url = git@github.com:adafruit/4-Channel-Level-Shifter-PCB.git
-[submodule "arduino/lib/SSD1331"]
-	path = arduino/lib/SSD1331
-	url = git@github.com:cscashby/SSD1331.git
