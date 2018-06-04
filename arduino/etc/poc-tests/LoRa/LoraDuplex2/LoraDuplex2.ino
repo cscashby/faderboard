@@ -11,9 +11,10 @@
 #include <SPI.h>              // include libraries
 #include <LoRa.h>
 
-#define SS 8          // LoRa radio chip select
-#define RST 4       // LoRa radio reset
-#define DI0 7         // change for your board; must be a hardware interrupt pin
+// Changed for RFM on Mega
+#define SS 4 //8          // LoRa radio chip select
+#define RST 3 //4       // LoRa radio reset
+#define DI0 2 //7         // change for your board; must be a hardware interrupt pin
 #define BAND    433E6 
 #define SPIFREQ 4E6
 
