@@ -20,7 +20,7 @@
 |  FD-J1 | 14 | FADER | Fader GND->Vref analogue |
 |  FD-J1 | 15 | FSCLb | Fader touch I2C (5-8) |
 |  FD-J1 | 16 | MA0 | Motor address LSB |
-|  FD-J1 | 17 | FI̅N̅T̅b | Fader touch interrupt (5-6) |
+|  FD-J1 | 17 | FI̅N̅T̅b | Fader touch interrupt (5-8) |
 |  FD-J1 | 18 | MA1 | Motor address |
 |  FD-J1 | 19 | MA2 | Motor address MSB |
 |  FD-J1 | 20 | FA0 | Fader address LSB |
