@@ -1,4 +1,4 @@
-update=Saturday, 16 June 2018 'pmt' 14:45:07
+update=Saturday, 16 June 2018 'pmt' 22:05:28
 version=1
 last_client=kicad
 [pcbnew]
@@ -25,6 +25,16 @@ version=1
 NetIExt=net
 [general]
 version=1
+[schematic_editor]
+version=1
+PageLayoutDescrFile=
+PlotDirectoryName=
+SubpartIdSeparator=0
+SubpartFirstId=65
+NetFmtName=
+SpiceForceRefPrefix=0
+SpiceUseNetNumbers=0
+LabSize=60
 [eeschema]
 version=1
 LibDir=
@@ -61,3 +71,5 @@ LibName29=valves
 LibName30=/Users/cashby/dev/electronics/faderboard/hardware/libraries/arduino-kicad-library/arduino
 LibName31=/Users/cashby/dev/electronics/faderboard/hardware/libraries/Adafruit RFM+LoRa Breakout
 LibName32=/Users/cashby/dev/electronics/faderboard/hardware/libraries/ca_others
+LibName33=/Users/cashby/dev/electronics/faderboard/hardware/libraries/PCA9635PW
+LibName34=switches
