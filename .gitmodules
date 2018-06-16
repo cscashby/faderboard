@@ -7,3 +7,6 @@
 [submodule "hardware/libraries/arduino-kicad-library"]
 	path = hardware/libraries/arduino-kicad-library
 	url = https://github.com/Alarm-Siren/arduino-kicad-library.git
+[submodule "hardware/libraries/Adafruit-RFM-LoRa-Radio-Breakout-PCB"]
+	path = hardware/libraries/Adafruit-RFM-LoRa-Radio-Breakout-PCB
+	url = https://github.com/adafruit/Adafruit-RFM-LoRa-Radio-Breakout-PCB.git
