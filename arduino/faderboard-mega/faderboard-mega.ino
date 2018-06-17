@@ -8,10 +8,14 @@
 // Libraries for displays
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1331.h>
+#include <Adafruit_HX8357.h>
 
 #include "MemoryFree.h"
+#include "stringutils.h"
 
 #define SERIAL_BAUD   115200
+
+#define LOOP_WAIT     100
 
 // Radio assignments
 #define RADIO_CS      4
@@ -26,6 +30,10 @@
 #define RADIO_DESKID  1
 #define RADIO_NETID   100
 
+// Maximum number of times re try to send a batch of fader levels
+#define RADIO_MAXRETRIES      5
+// Current try count - -1 = not changed
+int radio_sendtries = 0;
 // Singleton RF69 object
 RFM69 radio(RADIO_CS, RADIO_INT, false);
 
@@ -39,35 +47,51 @@ RFM69 radio(RADIO_CS, RADIO_INT, false);
 #define DISPLAY_DC    49
 #define MOTOR_CTLA    5
 #define MOTOR_CTLB    6
-#define FADER_PIN     A0
-// TODO: Remove these in favour of a global BEN
-#define MOTOR_BEN     10
-#define FADER_BEN     25
+#define TFT_LITE      10
+#define TFT_DC        11
+#define TFT_CS        12
+#define TFT_RST       13
+
+// Singleton TFT object
+Adafruit_HX8357 tft = Adafruit_HX8357(TFT_CS, TFT_DC, TFT_RST);
 
 // Need to check what's best for OSC here
-#define FADER_MIN     0
+#define FADER_NOTSENT 0
+#define FADER_MIN     1
 #define FADER_MAX     255
+
+// Only send if fader changes by...
+#define SEND_THRESHOLD 4
 
 const byte displayAddressPins[] = {26,27,28};
 const byte motorAddressPins[] = {7,8,9};
 const byte faderAddressPins[] = {22,23,24};
 const byte MApins[] = {7,8,9};
 
-// Constants
-#define MOTOR_WAIT  10
+const byte FaderPins[] = {A0,A1,A2,A3};
 
-#define MOTOR_FORWARD 1
+// Constants
+// - Time to wait for motor to move measurably
+#define MOTOR_WAIT     20
+
+#define MOTOR_FORWARD  1
 #define MOTOR_BACKWARD 0
+
+// - TFT rotation
+#define TFT_ROTATION   3
 
 // Uncomment this for faders to calibrate using motors
 // - if commented, picks a guess (below) for max / min (quieter and quicker)
 // - faders will calibrate first time they're used
 //#define MOTOR_CALIBRATE
+
 #define MOTOR_DEFAULTMIN  900
 #define MOTOR_DEFAULTMAX  100
 
 double fadersMin[FADER_COUNT];
 double fadersMax[FADER_COUNT];
+// Storage for fader values sent via radio
+byte sentFaderVal[FADER_COUNT];
 
 // Display color definitions
 #define BLACK           0x0000
@@ -89,36 +113,71 @@ void setup() {
   initRadio();
   // Initialise fader motors
   initFaders();
-  // Initialise displays
+  // Initialise displays (scribble strips)
   initDisplays();
+  // Initialise TFT
+  initTFT();
 }
 
 // Main loop
-unsigned long previousMillis = 0;
-const long sendInterval = 3000;
 void loop() {
   Adafruit_SSD1331* currentDisplay;
-  for( byte fader = 0; fader < DISPLAY_COUNT; fader++ ) {
-    currentDisplay = getDisplay(fader);
-    currentDisplay->setTextSize(2);
-    currentDisplay->setCursor(0,35);
-    currentDisplay->setTextColor(RED, BLACK);
-    currentDisplay->print(faderRead(fader));
-  }
-
-  // Send test radio packet     
-  unsigned long currentMillis = millis();
-  if (currentMillis - previousMillis >= sendInterval) {
-    previousMillis = currentMillis;
-  
-    if (Serial) Serial.print("Sending");
-    char payload[] = "hello from test node";
-    if (radio.sendWithRetry(RADIO_DESKID, payload, sizeof(payload), 1, 200)) {
-      if (Serial) Serial.println("... ACK received");
-    } else {
-      if (Serial) Serial.println("... No ACK");
+  byte faderVal[FADER_COUNT];
+  for( byte fader = 0; fader < FADER_COUNT; fader++ ) {
+    faderVal[fader] = faderRead(fader);
+    if( fader < DISPLAY_COUNT ) {
+      currentDisplay = getDisplay(fader);
+      currentDisplay->setTextSize(2);
+      currentDisplay->setCursor(0,35);
+      currentDisplay->setTextColor(RED, BLACK);
+      currentDisplay->print(faderVal[fader]);
+      currentDisplay->print("   ");
+    }
+    // If we're not in a retry loop and the fader values have changed then we need to send some data
+    if( radio_sendtries == -1 && (faderVal[fader] < ( sentFaderVal[fader] - SEND_THRESHOLD ) || faderVal[fader] > ( sentFaderVal[fader] + SEND_THRESHOLD )) ) {
+      radio_sendtries = 0;
     }
   }
+
+  tft.setCursor(0, 20);
+  for( byte fader = 0; fader < FADER_COUNT; fader++ ) {
+    tft.setTextColor(HX8357_RED, HX8357_BLACK);
+    tft.setTextSize(2);
+    tft.print(u2s(faderVal[fader], 3));
+    tft.print(" ");
+  }
+
+  if( radio_sendtries > -1 ) {
+    if (Serial) Serial.print(radio_sendtries);
+    if (Serial) Serial.print(" tries: Sending ");
+    byte payload[FADER_COUNT];
+    for( byte fader = 0; fader < FADER_COUNT; fader++ ) {
+      payload[fader] = faderVal[fader];
+      if (Serial) Serial.print(faderVal[fader]);
+      if( Serial && fader - 1 < FADER_COUNT ) Serial.print(",");
+    }
+    if (radio.sendWithRetry(RADIO_DESKID, payload, sizeof(payload), 1, 300)) {
+      if (Serial) Serial.println("... ACK received");
+      for( byte fader = 0; fader < FADER_COUNT; fader++ ) {
+        payload[fader] = faderVal[fader];
+        // Register these values as sent
+        sentFaderVal[fader] = faderVal[fader];
+      }
+      radio_sendtries = -1;
+    } else {
+      radio_sendtries++;
+      if (Serial) Serial.print("... No ACK ");
+      if (Serial) Serial.print(radio_sendtries);
+      if (Serial) Serial.println(" retries");
+      // We give up if we have tried too often, but we'll try again when the fader next changes
+      if( radio_sendtries >= RADIO_MAXRETRIES ) radio_sendtries = -1;
+      for( byte fader = 0; fader < FADER_COUNT; fader++ ) {
+        sentFaderVal[fader] = faderVal[fader];
+      }
+    }
+  }
+
+  delay(LOOP_WAIT);
 }
 
 void initRadio() {
@@ -168,15 +227,29 @@ Adafruit_SSD1331* getDisplay(byte fader) {
   return displays[fader];
 }
 
+void initTFT() {
+  if( Serial ) Serial.print("TFT initialisation...");
+
+  pinMode(TFT_LITE, OUTPUT);
+  // TODO: Support PWM for LCD backlight
+  digitalWrite(TFT_LITE, HIGH);
+
+  tft.begin(HX8357D);
+  tft.setRotation(TFT_ROTATION);
+  
+  tft.fillScreen(HX8357_BLACK);
+
+  tft.setCursor(0, 0);
+  tft.setTextColor(HX8357_WHITE);  tft.setTextSize(1);
+  tft.println("Ready");
+
+  if( Serial ) Serial.println(" TFT ready");
+}
+
 void initFaders() {
   if( Serial ) Serial.println("Motor initialisation...");
   pinMode(MOTOR_CTLA,OUTPUT);
   pinMode(MOTOR_CTLB,OUTPUT);
-  // - TODO: Remove BEN
-  pinMode(MOTOR_BEN,OUTPUT);
-  pinMode(FADER_BEN,OUTPUT);
-  digitalWrite(MOTOR_BEN, HIGH);
-  digitalWrite(FADER_BEN, LOW);
   setModeOfPins(motorAddressPins, OUTPUT);
   setModeOfPins(faderAddressPins, OUTPUT);
 #ifdef MOTOR_CALIBRATE
@@ -184,6 +257,7 @@ void initFaders() {
   //   - before / after fader variables to check if stopped moving
   double a,b;
   for( byte fader = 0; fader < FADER_COUNT; fader++ ) {
+    sentFaderVal[fader] = FADER_NOTSENT;
     a = 0; b = 10;
     // - motor could be anywhere so go down first
     motorMove(fader, MOTOR_BACKWARD);
@@ -261,12 +335,12 @@ void faderSelect(byte fader) {
 
 double faderReadRAW(byte fader) {
   faderSelect(fader);
-  return analogRead(FADER_PIN);
+  return analogRead(FaderPins[0]);
 }
 
-double faderRead(byte fader) {
+byte faderRead(byte fader) {
   faderSelect(fader);
-  double val = analogRead(FADER_PIN);
+  double val = analogRead(FaderPins[0]);
   if( fadersMin[fader] < fadersMax[fader] ) {
     if( val < fadersMin[fader] ) {
       fadersMin[fader] = val;
