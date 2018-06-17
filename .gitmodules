@@ -14,3 +14,6 @@
 	path = pi/lib/python-x32
 	url = git@github.com:cscashby/python-x32.git
 
+[submodule "arduino/lib/Adafruit-SSD1331-OLED-Driver-Library-for-Arduino"]
+	path = arduino/lib/Adafruit-SSD1331-OLED-Driver-Library-for-Arduino
+	url = git@github.com:cscashby/Adafruit-SSD1331-OLED-Driver-Library-for-Arduino.git

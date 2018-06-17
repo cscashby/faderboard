@@ -8,9 +8,10 @@
 // Libraries for displays
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1331.h>
-#include "Adafruit_HX8357.h"
+#include <Adafruit_HX8357.h>
 
 #include "MemoryFree.h"
+#include "stringutils.h"
 
 #define SERIAL_BAUD   115200
 
@@ -138,18 +139,26 @@ void loop() {
     }
   }
 
+  tft.setCursor(0, 20);
+  for( byte fader = 0; fader < FADER_COUNT; fader++ ) {
+    tft.setTextColor(HX8357_RED, HX8357_BLACK);
+    tft.setTextSize(2);
+    tft.print(u2s(faderVal[fader], 3));
+    tft.print(" ");
+  }
+
   if( radio_sendtries > -1 ) {
     if (Serial) Serial.print(radio_sendtries);
     if (Serial) Serial.print(" tries: Sending ");
-    byte payload[DISPLAY_COUNT];
-    for( byte fader = 0; fader < DISPLAY_COUNT; fader++ ) {
+    byte payload[FADER_COUNT];
+    for( byte fader = 0; fader < FADER_COUNT; fader++ ) {
       payload[fader] = faderVal[fader];
       if (Serial) Serial.print(faderVal[fader]);
-      if( Serial && fader - 1 < DISPLAY_COUNT ) Serial.print(",");
+      if( Serial && fader - 1 < FADER_COUNT ) Serial.print(",");
     }
     if (radio.sendWithRetry(RADIO_DESKID, payload, sizeof(payload), 1, 300)) {
       if (Serial) Serial.println("... ACK received");
-      for( byte fader = 0; fader < DISPLAY_COUNT; fader++ ) {
+      for( byte fader = 0; fader < FADER_COUNT; fader++ ) {
         payload[fader] = faderVal[fader];
         // Register these values as sent
         sentFaderVal[fader] = faderVal[fader];
@@ -162,7 +171,7 @@ void loop() {
       if (Serial) Serial.println(" retries");
       // We give up if we have tried too often, but we'll try again when the fader next changes
       if( radio_sendtries >= RADIO_MAXRETRIES ) radio_sendtries = -1;
-      for( byte fader = 0; fader < DISPLAY_COUNT; fader++ ) {
+      for( byte fader = 0; fader < FADER_COUNT; fader++ ) {
         sentFaderVal[fader] = faderVal[fader];
       }
     }
