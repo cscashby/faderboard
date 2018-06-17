@@ -10,3 +10,7 @@
 [submodule "hardware/libraries/Adafruit-RFM-LoRa-Radio-Breakout-PCB"]
 	path = hardware/libraries/Adafruit-RFM-LoRa-Radio-Breakout-PCB
 	url = https://github.com/adafruit/Adafruit-RFM-LoRa-Radio-Breakout-PCB.git
+[submodule "pi/lib/python-x32"]
+	path = pi/lib/python-x32
+	url = git@github.com:cscashby/python-x32.git
+
