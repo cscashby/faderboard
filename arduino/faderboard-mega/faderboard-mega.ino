@@ -156,7 +156,7 @@ void loop() {
       if (Serial) Serial.print(faderVal[fader]);
       if( Serial && fader - 1 < FADER_COUNT ) Serial.print(",");
     }
-    if (radio.sendWithRetry(RADIO_DESKID, payload, sizeof(payload), 1, 300)) {
+    if (radio.sendWithRetry(RADIO_DESKID, payload, sizeof(payload), 1, 400)) {
       if (Serial) Serial.println("... ACK received");
       for( byte fader = 0; fader < FADER_COUNT; fader++ ) {
         payload[fader] = faderVal[fader];
@@ -191,7 +191,7 @@ void initRadio() {
   // Initialize the radio
   radio.initialize(RADIO_BAND, RADIO_MYID, RADIO_NETID);
   radio.promiscuous(true);
-  #ifdef IS_RFM69HW_HCW
+  #ifdef RADIO_IS_RFM69HW_HCW
     radio.setHighPower(); //must include this only for RFM69HW/HCW!
   #endif
   if( Serial ) Serial.println(" Radio ready");
