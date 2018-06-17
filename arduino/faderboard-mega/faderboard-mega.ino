@@ -8,6 +8,7 @@
 // Libraries for displays
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1331.h>
+#include "Adafruit_HX8357.h"
 
 #include "MemoryFree.h"
 
@@ -45,10 +46,13 @@ RFM69 radio(RADIO_CS, RADIO_INT, false);
 #define DISPLAY_DC    49
 #define MOTOR_CTLA    5
 #define MOTOR_CTLB    6
-#define FADER_PIN     A0
-// TODO: Remove these in favour of a global BEN
-#define MOTOR_BEN     10
-#define FADER_BEN     25
+#define TFT_LITE      10
+#define TFT_DC        11
+#define TFT_CS        12
+#define TFT_RST       13
+
+// Singleton TFT object
+Adafruit_HX8357 tft = Adafruit_HX8357(TFT_CS, TFT_DC, TFT_RST);
 
 // Need to check what's best for OSC here
 #define FADER_NOTSENT 0
@@ -63,16 +67,23 @@ const byte motorAddressPins[] = {7,8,9};
 const byte faderAddressPins[] = {22,23,24};
 const byte MApins[] = {7,8,9};
 
-// Constants
-#define MOTOR_WAIT  10
+const byte FaderPins[] = {A0,A1,A2,A3};
 
-#define MOTOR_FORWARD 1
+// Constants
+// - Time to wait for motor to move measurably
+#define MOTOR_WAIT     20
+
+#define MOTOR_FORWARD  1
 #define MOTOR_BACKWARD 0
+
+// - TFT rotation
+#define TFT_ROTATION   3
 
 // Uncomment this for faders to calibrate using motors
 // - if commented, picks a guess (below) for max / min (quieter and quicker)
 // - faders will calibrate first time they're used
 //#define MOTOR_CALIBRATE
+
 #define MOTOR_DEFAULTMIN  900
 #define MOTOR_DEFAULTMAX  100
 
@@ -101,8 +112,10 @@ void setup() {
   initRadio();
   // Initialise fader motors
   initFaders();
-  // Initialise displays
+  // Initialise displays (scribble strips)
   initDisplays();
+  // Initialise TFT
+  initTFT();
 }
 
 // Main loop
@@ -148,7 +161,7 @@ void loop() {
       if (Serial) Serial.print(radio_sendtries);
       if (Serial) Serial.println(" retries");
       // We give up if we have tried too often, but we'll try again when the fader next changes
-      if( radio_sendtries > RADIO_MAXRETRIES ) radio_sendtries = -1;
+      if( radio_sendtries >= RADIO_MAXRETRIES ) radio_sendtries = -1;
       for( byte fader = 0; fader < DISPLAY_COUNT; fader++ ) {
         sentFaderVal[fader] = faderVal[fader];
       }
@@ -205,15 +218,29 @@ Adafruit_SSD1331* getDisplay(byte fader) {
   return displays[fader];
 }
 
+void initTFT() {
+  if( Serial ) Serial.print("TFT initialisation...");
+
+  pinMode(TFT_LITE, OUTPUT);
+  // TODO: Support PWM for LCD backlight
+  digitalWrite(TFT_LITE, HIGH);
+
+  tft.begin(HX8357D);
+  tft.setRotation(TFT_ROTATION);
+  
+  tft.fillScreen(HX8357_BLACK);
+
+  tft.setCursor(0, 0);
+  tft.setTextColor(HX8357_WHITE);  tft.setTextSize(1);
+  tft.println("Ready");
+
+  if( Serial ) Serial.println(" TFT ready");
+}
+
 void initFaders() {
   if( Serial ) Serial.println("Motor initialisation...");
   pinMode(MOTOR_CTLA,OUTPUT);
   pinMode(MOTOR_CTLB,OUTPUT);
-  // - TODO: Remove BEN
-  pinMode(MOTOR_BEN,OUTPUT);
-  pinMode(FADER_BEN,OUTPUT);
-  digitalWrite(MOTOR_BEN, HIGH);
-  digitalWrite(FADER_BEN, LOW);
   setModeOfPins(motorAddressPins, OUTPUT);
   setModeOfPins(faderAddressPins, OUTPUT);
 #ifdef MOTOR_CALIBRATE
@@ -299,12 +326,12 @@ void faderSelect(byte fader) {
 
 double faderReadRAW(byte fader) {
   faderSelect(fader);
-  return analogRead(FADER_PIN);
+  return analogRead(FaderPins[0]);
 }
 
 byte faderRead(byte fader) {
   faderSelect(fader);
-  double val = analogRead(FADER_PIN);
+  double val = analogRead(FaderPins[0]);
   if( fadersMin[fader] < fadersMax[fader] ) {
     if( val < fadersMin[fader] ) {
       fadersMin[fader] = val;
