@@ -13,6 +13,8 @@
 
 #define SERIAL_BAUD   115200
 
+#define LOOP_WAIT     100
+
 // Radio assignments
 #define RADIO_CS      4
 #define RADIO_RST     2
@@ -26,6 +28,10 @@
 #define RADIO_DESKID  1
 #define RADIO_NETID   100
 
+// Maximum number of times re try to send a batch of fader levels
+#define RADIO_MAXRETRIES      5
+// Current try count - -1 = not changed
+int radio_sendtries = 0;
 // Singleton RF69 object
 RFM69 radio(RADIO_CS, RADIO_INT, false);
 
@@ -45,8 +51,12 @@ RFM69 radio(RADIO_CS, RADIO_INT, false);
 #define FADER_BEN     25
 
 // Need to check what's best for OSC here
-#define FADER_MIN     0
+#define FADER_NOTSENT 0
+#define FADER_MIN     1
 #define FADER_MAX     255
+
+// Only send if fader changes by...
+#define SEND_THRESHOLD 4
 
 const byte displayAddressPins[] = {26,27,28};
 const byte motorAddressPins[] = {7,8,9};
@@ -68,6 +78,8 @@ const byte MApins[] = {7,8,9};
 
 double fadersMin[FADER_COUNT];
 double fadersMax[FADER_COUNT];
+// Storage for fader values sent via radio
+byte sentFaderVal[FADER_COUNT];
 
 // Display color definitions
 #define BLACK           0x0000
@@ -94,31 +106,56 @@ void setup() {
 }
 
 // Main loop
-unsigned long previousMillis = 0;
-const long sendInterval = 3000;
 void loop() {
   Adafruit_SSD1331* currentDisplay;
-  for( byte fader = 0; fader < DISPLAY_COUNT; fader++ ) {
-    currentDisplay = getDisplay(fader);
-    currentDisplay->setTextSize(2);
-    currentDisplay->setCursor(0,35);
-    currentDisplay->setTextColor(RED, BLACK);
-    currentDisplay->print(faderRead(fader));
-  }
-
-  // Send test radio packet     
-  unsigned long currentMillis = millis();
-  if (currentMillis - previousMillis >= sendInterval) {
-    previousMillis = currentMillis;
-  
-    if (Serial) Serial.print("Sending");
-    char payload[] = "hello from test node";
-    if (radio.sendWithRetry(RADIO_DESKID, payload, sizeof(payload), 1, 200)) {
-      if (Serial) Serial.println("... ACK received");
-    } else {
-      if (Serial) Serial.println("... No ACK");
+  byte faderVal[FADER_COUNT];
+  for( byte fader = 0; fader < FADER_COUNT; fader++ ) {
+    faderVal[fader] = faderRead(fader);
+    if( fader < DISPLAY_COUNT ) {
+      currentDisplay = getDisplay(fader);
+      currentDisplay->setTextSize(2);
+      currentDisplay->setCursor(0,35);
+      currentDisplay->setTextColor(RED, BLACK);
+      currentDisplay->print(faderVal[fader]);
+      currentDisplay->print("   ");
+    }
+    // If we're not in a retry loop and the fader values have changed then we need to send some data
+    if( radio_sendtries == -1 && (faderVal[fader] < ( sentFaderVal[fader] - SEND_THRESHOLD ) || faderVal[fader] > ( sentFaderVal[fader] + SEND_THRESHOLD )) ) {
+      radio_sendtries = 0;
     }
   }
+
+  if( radio_sendtries > -1 ) {
+    if (Serial) Serial.print(radio_sendtries);
+    if (Serial) Serial.print(" tries: Sending ");
+    byte payload[DISPLAY_COUNT];
+    for( byte fader = 0; fader < DISPLAY_COUNT; fader++ ) {
+      payload[fader] = faderVal[fader];
+      if (Serial) Serial.print(faderVal[fader]);
+      if( Serial && fader - 1 < DISPLAY_COUNT ) Serial.print(",");
+    }
+    if (radio.sendWithRetry(RADIO_DESKID, payload, sizeof(payload), 1, 300)) {
+      if (Serial) Serial.println("... ACK received");
+      for( byte fader = 0; fader < DISPLAY_COUNT; fader++ ) {
+        payload[fader] = faderVal[fader];
+        // Register these values as sent
+        sentFaderVal[fader] = faderVal[fader];
+      }
+      radio_sendtries = -1;
+    } else {
+      radio_sendtries++;
+      if (Serial) Serial.print("... No ACK ");
+      if (Serial) Serial.print(radio_sendtries);
+      if (Serial) Serial.println(" retries");
+      // We give up if we have tried too often, but we'll try again when the fader next changes
+      if( radio_sendtries > RADIO_MAXRETRIES ) radio_sendtries = -1;
+      for( byte fader = 0; fader < DISPLAY_COUNT; fader++ ) {
+        sentFaderVal[fader] = faderVal[fader];
+      }
+    }
+  }
+
+  delay(LOOP_WAIT);
 }
 
 void initRadio() {
@@ -184,6 +221,7 @@ void initFaders() {
   //   - before / after fader variables to check if stopped moving
   double a,b;
   for( byte fader = 0; fader < FADER_COUNT; fader++ ) {
+    sentFaderVal[fader] = FADER_NOTSENT;
     a = 0; b = 10;
     // - motor could be anywhere so go down first
     motorMove(fader, MOTOR_BACKWARD);
@@ -264,7 +302,7 @@ double faderReadRAW(byte fader) {
   return analogRead(FADER_PIN);
 }
 
-double faderRead(byte fader) {
+byte faderRead(byte fader) {
   faderSelect(fader);
   double val = analogRead(FADER_PIN);
   if( fadersMin[fader] < fadersMax[fader] ) {
