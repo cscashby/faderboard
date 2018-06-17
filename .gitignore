@@ -9,6 +9,7 @@
 _autosave-*
 _saved*
 *.tmp
+*.swp
 
 # Netlist files (exported from Eeschema)
 *.net
