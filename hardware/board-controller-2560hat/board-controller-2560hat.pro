@@ -1,4 +1,4 @@
-update=Saturday, 27 January 2018 'pmt' 17:02:19
+update=Saturday, 16 June 2018 'pmt' 22:05:28
 version=1
 last_client=kicad
 [pcbnew]
@@ -23,6 +23,18 @@ ModuleOutlineThickness=0.150000000000
 [cvpcb]
 version=1
 NetIExt=net
+[general]
+version=1
+[schematic_editor]
+version=1
+PageLayoutDescrFile=
+PlotDirectoryName=
+SubpartIdSeparator=0
+SubpartFirstId=65
+NetFmtName=
+SpiceForceRefPrefix=0
+SpiceUseNetNumbers=0
+LabSize=60
 [eeschema]
 version=1
 LibDir=
@@ -56,5 +68,8 @@ LibName26=opto
 LibName27=atmel
 LibName28=contrib
 LibName29=valves
-[general]
-version=1
+LibName30=/Users/cashby/dev/electronics/faderboard/hardware/libraries/arduino-kicad-library/arduino
+LibName31=/Users/cashby/dev/electronics/faderboard/hardware/libraries/Adafruit RFM+LoRa Breakout
+LibName32=/Users/cashby/dev/electronics/faderboard/hardware/libraries/ca_others
+LibName33=/Users/cashby/dev/electronics/faderboard/hardware/libraries/PCA9635PW
+LibName34=switches

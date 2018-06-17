@@ -39,12 +39,12 @@ encoding utf-8
 Sheet 1 1
 Title "Fader and OLED board"
 Date "28/14/2018"
-Rev "0.1"
+Rev "1.0"
 Comp ""
 Comment1 "Prefixes - M = motor, F = fader, D = display"
 Comment2 ""
 Comment3 "NOTE: Configured for all 5v Logic"
-Comment4 "TODO: Check I2C pullup requirement (on what board?)"
+Comment4 ""
 $EndDescr
 $Comp
 L RSA0N11M9A0J RV1

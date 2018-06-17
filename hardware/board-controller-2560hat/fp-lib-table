@@ -1,0 +1,4 @@
+(fp_lib_table
+  (lib (name Arduino)(type KiCad)(uri /Users/cashby/dev/electronics/faderboard/hardware/libraries/arduino-kicad-library/Arduino.pretty)(options "")(descr ""))
+  (lib (name "Adafruit RFM+LoRa Breakout")(type Eagle)(uri "/Users/cashby/dev/electronics/faderboard/hardware/libraries/Adafruit RFM+LoRa Breakout.lbr")(options "")(descr ""))
+)

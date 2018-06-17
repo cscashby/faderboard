@@ -4,6 +4,13 @@
 [submodule "hardware/notes/logic-levels/4-Channel-Level-Shifter-PCB"]
 	path = hardware/notes/logic-levels/4-Channel-Level-Shifter-PCB
 	url = git@github.com:adafruit/4-Channel-Level-Shifter-PCB.git
+[submodule "hardware/libraries/arduino-kicad-library"]
+	path = hardware/libraries/arduino-kicad-library
+	url = https://github.com/Alarm-Siren/arduino-kicad-library.git
+[submodule "hardware/libraries/Adafruit-RFM-LoRa-Radio-Breakout-PCB"]
+	path = hardware/libraries/Adafruit-RFM-LoRa-Radio-Breakout-PCB
+	url = https://github.com/adafruit/Adafruit-RFM-LoRa-Radio-Breakout-PCB.git
 [submodule "pi/lib/python-x32"]
 	path = pi/lib/python-x32
 	url = git@github.com:cscashby/python-x32.git
+
