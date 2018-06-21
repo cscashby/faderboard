@@ -1,0 +1,88 @@
+
+(rules PCB board-controller-2560hat
+  (snap_angle 
+    fortyfive_degree
+  )
+  (autoroute_settings
+    (fanout off)
+    (autoroute on)
+    (postroute on)
+    (vias on)
+    (via_costs 50)
+    (plane_via_costs 5)
+    (start_ripup_costs 100)
+    (start_pass_no 18549)
+    (layer_rule F.Cu
+      (active on)
+      (preferred_direction vertical)
+      (preferred_direction_trace_costs 1.0)
+      (against_preferred_direction_trace_costs 2.1)
+    )
+    (layer_rule B.Cu
+      (active on)
+      (preferred_direction horizontal)
+      (preferred_direction_trace_costs 1.0)
+      (against_preferred_direction_trace_costs 1.9)
+    )
+  )
+  (rule
+    (width 250.0)
+    (clear 200.2)
+    (clear 125.0 (type smd_to_turn_gap))
+    (clear 50.0 (type smd_smd))
+  )
+  (padstack "Via[0-1]_600:400_um"
+    (shape
+      (circle F.Cu 600.0 0.0 0.0)
+    )
+    (shape
+      (circle B.Cu 600.0 0.0 0.0)
+    )
+    (attach off)
+  )
+  (via 
+    "Via[0-1]_600:400_um" "Via[0-1]_600:400_um" default
+  )
+  (via 
+    "Via[0-1]_600:400_um-kicad_default" "Via[0-1]_600:400_um" "kicad_default"
+  )
+  (via_rule
+    default "Via[0-1]_600:400_um"
+  )
+  (via_rule
+    "kicad_default" "Via[0-1]_600:400_um-kicad_default"
+  )
+  (class default
+    (clearance_class default)
+    (via_rule default)
+    (rule
+      (width 250.0)
+    )
+    (circuit 
+      (use_layer F.Cu B.Cu)
+    )
+  )
+  (class "kicad_default"
+    +5V GND /Vref +3V3 /SCL /SDA "/RFM_MOSI_3v3" /DSDA
+    "/RFM_SCK_3v3" /DSCL "/RFM_~RST~_3v3" "/RFM_~RST~_5v" "/RFM_~CS~_5v" "/RFM_~CS~_3v3" "Net-(U2-Pad1P)" "/RFM_MISO"
+    "/RFM_~INT~" /~RESET~ /FSDAa0 /FSCLa0 /FSDAb0 /FSCLb0 /FSDAa1 /FSCLa1
+    /FSDAb1 /FSCLb1 /FSDAa2 /FSCLa2 /FSDAb2 /FSCLb2 /FSDAa3 /FSCLa3
+    /FSDAb3 /FSCLb3 "Net-(J1-Pad1)" "/LCD_LITE" "/LCD_~RST~" "/LCD_~CS~" "/LCD_D~C~" "/LCD_Y+"
+    "/LCD_X+" "/LCD_Y-" "/LCD_X-" +9V /MCTLA /MCTLB /F~INT~a0 /BSEL0
+    /FADER0 /MA0 /F~INT~b0 /MA1 /MA2 /FA0 /FA1 /FA2
+    /DA0 /DA1 /DA2 /DD~C~ /D~CS~ /D~RST~ /F~INT~a1 /BSEL1
+    /FADER1 /F~INT~b1 /F~INT~a2 /BSEL2 /FADER2 /F~INT~b2 /F~INT~a3 /BSEL3
+    /FADER3 /F~INT~b3 "/KEY_LED0" "/KEY_LED1" "/KEY_LED2" "/KEY_LED3" "/KEY_LED4" "/KEY_LED5"
+    "/KEY_LED6" "/KEY_LED7" "/KEY_LED8" "/KEY_LED9" "/KEY_LED10" "/KEY_LED11" "/KEY_LED12" "/KEY_LED13"
+    "/KEY_LED14" "/KEY_LED15" "/KEY_COL0" "/KEY_COL1" "/KEY_COL2" "/KEY_COL3" "/KEY_ROW0" "/KEY_ROW1"
+    "/KEY_ROW2" "/KEY_ROW3" "/KBD_~INT~"
+    (clearance_class "kicad_default")
+    (via_rule kicad_default)
+    (rule
+      (width 250.0)
+    )
+    (circuit 
+      (use_layer F.Cu B.Cu)
+    )
+  )
+)
