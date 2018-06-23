@@ -2456,7 +2456,7 @@
   (gr_line (start 334.5 239) (end 84.5 239) (angle 90) (layer Edge.Cuts) (width 0.15))
   (gr_line (start 334.5 29) (end 334.5 239) (angle 90) (layer Edge.Cuts) (width 0.15))
   (gr_line (start 84.5 29) (end 334.5 29) (angle 90) (layer Edge.Cuts) (width 0.15))
-  (gr_text "Faderboard v0.1\nC Ashby\n17-MAY-2018" (at 107.5 75) (layer F.SilkS)
+  (gr_text "Faderboard v1.0\nC Ashby\n16-JUN-2018" (at 107.5 75) (layer F.SilkS)
     (effects (font (size 2.5 2.5) (thickness 0.3)))
   )
 
