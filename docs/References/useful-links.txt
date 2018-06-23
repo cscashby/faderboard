@@ -2,8 +2,6 @@ Mega2560 docs:
 
 https://store.arduino.cc/arduino-mega-2560-rev3
 
-
-
 Multiplexing SPI lines:
 
 https://forum.arduino.cc/index.php?topic=461410.0
