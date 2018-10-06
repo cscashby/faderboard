@@ -17,6 +17,20 @@
 
 #define LOOP_WAIT     100
 
+// This code only supports one board at the moment. BSEL goes high to enable it.
+#define BOARD_SELECT  0
+
+// Wait time between BSEL actions (for enable pins to get high/low enough)
+#define DELAY_BSEL    1
+
+// Debugging to avoid LCD/DISPLAY/RADIO if not needed
+#define USE_RADIO     0
+#define USE_DISPLAYS  0
+#define USE_TFT       0
+
+// Board select pins
+const byte boardAddressPins[] = { 40,41,42,43 };
+
 // Radio assignments
 #define RADIO_CS      4
 #define RADIO_RST     2
@@ -31,7 +45,7 @@
 #define RADIO_NETID   100
 
 // Maximum number of times re try to send a batch of fader levels
-#define RADIO_MAXRETRIES      5
+#define RADIO_MAXRETRIES      1
 // Current try count - -1 = not changed
 int radio_sendtries = 0;
 // Singleton RF69 object
@@ -68,7 +82,7 @@ const byte motorAddressPins[] = {7,8,9};
 const byte faderAddressPins[] = {22,23,24};
 const byte MApins[] = {7,8,9};
 
-const byte FaderPins[] = {A0,A1,A2,A3};
+const byte faderAnaloguePins[] = {A0,A1,A2,A3};
 
 // Constants
 // - Time to wait for motor to move measurably
@@ -83,7 +97,7 @@ const byte FaderPins[] = {A0,A1,A2,A3};
 // Uncomment this for faders to calibrate using motors
 // - if commented, picks a guess (below) for max / min (quieter and quicker)
 // - faders will calibrate first time they're used
-//#define MOTOR_CALIBRATE
+#define MOTOR_CALIBRATE
 
 #define MOTOR_DEFAULTMIN  900
 #define MOTOR_DEFAULTMAX  100
@@ -109,8 +123,13 @@ void setup() {
   Serial.begin(SERIAL_BAUD);
   if( Serial ) Serial.println("START");
 
+  // Board select
+  pinMode(boardAddressPins[BOARD_SELECT],OUTPUT);
+  digitalWrite(boardAddressPins[BOARD_SELECT], HIGH);
+  delay(DELAY_BSEL);
+
   // Initialise LoRa radio stuff
-  initRadio();
+  if( USE_RADIO > 0 ) initRadio();
   // Initialise fader motors
   initFaders();
   // Initialise displays (scribble strips)
@@ -134,10 +153,14 @@ void loop() {
       currentDisplay->print("   ");
     }
     // If we're not in a retry loop and the fader values have changed then we need to send some data
-    if( radio_sendtries == -1 && (faderVal[fader] < ( sentFaderVal[fader] - SEND_THRESHOLD ) || faderVal[fader] > ( sentFaderVal[fader] + SEND_THRESHOLD )) ) {
+    if( USE_RADIO > 0 && radio_sendtries == -1 && (faderVal[fader] < ( sentFaderVal[fader] - SEND_THRESHOLD ) || faderVal[fader] > ( sentFaderVal[fader] + SEND_THRESHOLD )) ) {
       radio_sendtries = 0;
     }
+    if (Serial) Serial.print("Faders: ");
+    if (Serial) Serial.print(faderVal[fader]);
+    if( Serial && fader - 1 < FADER_COUNT ) Serial.print(",");
   }
+  if (Serial) Serial.println(".");
 
   tft.setCursor(0, 20);
   for( byte fader = 0; fader < FADER_COUNT; fader++ ) {
@@ -335,12 +358,25 @@ void faderSelect(byte fader) {
 
 double faderReadRAW(byte fader) {
   faderSelect(fader);
-  return analogRead(FaderPins[0]);
+  // TODO: Fix this in hardware - BSEL should be active HIGH for all chips on the fader boards
+  digitalWrite(boardAddressPins[BOARD_SELECT], LOW);
+  delay(DELAY_BSEL);
+  int val = analogRead(faderAnaloguePins[BOARD_SELECT]);
+  // TODO: Fix this in hardware - BSEL should be active HIGH for all chips on the fader boards
+  digitalWrite(boardAddressPins[BOARD_SELECT], HIGH);
+  delay(DELAY_BSEL);
+  return val;
 }
 
 byte faderRead(byte fader) {
   faderSelect(fader);
-  double val = analogRead(FaderPins[0]);
+  // TODO: Fix this in hardware - BSEL should be active HIGH for all chips on the fader boards
+  digitalWrite(boardAddressPins[BOARD_SELECT], LOW);
+  delay(DELAY_BSEL);
+  double val = analogRead(faderAnaloguePins[BOARD_SELECT]);
+  // TODO: Fix this in hardware - BSEL should be active HIGH for all chips on the fader boards
+  digitalWrite(boardAddressPins[BOARD_SELECT], HIGH);
+  delay(DELAY_BSEL);
   if( fadersMin[fader] < fadersMax[fader] ) {
     if( val < fadersMin[fader] ) {
       fadersMin[fader] = val;

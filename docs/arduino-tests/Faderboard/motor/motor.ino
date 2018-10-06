@@ -2,10 +2,10 @@ const int MCTLA = 5;
 const int MCTLB = 6;
 const int FADERS = 8;
 const byte MApins[] = {7,8,9};
-const byte MBEN = 10;
+const byte MBEN = 40;
 
 void setup(){
-  Serial.begin(9600);
+  Serial.begin(115200);
   pinMode(MCTLA,OUTPUT);
   pinMode(MCTLB,OUTPUT);
   pinMode(MBEN,OUTPUT);

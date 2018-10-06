@@ -8,7 +8,7 @@ const byte FApins[] = {22,23,24};
 const byte FEN = 25;
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   pinMode(ledPin, OUTPUT);
   
   pinMode(FEN,OUTPUT);
